@@ -9,7 +9,7 @@ SEPARATOR = "----------------------------------------------------------"
 from course import Course
 from student import Student
 from faculty import Faculty
-
+from faculty import complete_report
 # ======================================================
 # SAMPLE DATA
 # ======================================================
@@ -33,31 +33,16 @@ courses = [
 ]
 
 # Assign every course to every sample student
-for student in students:
-    for course in courses:
-        student.add_course(course)
+
 
 # Create faculties
 faculties = [
     Faculty("Science Faculty"),
     Faculty("Humanities Faculty")
 ]
-
 # Populate each faculty with sample students
-for faculty in faculties:
 
-    for i in range(5):
 
-        new_student = Student(
-            i + 1,
-            f"Student {i + 1}",
-            "1990-01-01"
-        )
-
-        # Give every sample student one course
-        new_student.add_course(courses[0])
-
-        faculty.add_student(new_student)
 
 # ======================================================
 # MAIN MENU
@@ -106,17 +91,21 @@ while True:
 
     if option == 1:
 
-        for faculty in faculties:
+        print("Select a faculty")
 
-            print(f"\n{faculty.faculty_name}")
+        # Display every faculty
+        for i, faculty in enumerate(faculties):
+            print(f"{i + 1}. {faculty.faculty_name}")
 
-            for student in faculty.students:
+        selection = int(input("Enter the faculty number: "))
 
-                print(student)
-
-                # Display every course assigned to the student
-                for course in student.courses_taken:
-                    print(f"   - {course}")
+        # Validate faculty selection
+        if 1 <= selection <= len(faculties):
+            selected_faculty = faculties[selection - 1]
+        else:
+            print("Invalid number")
+            continue
+        complete_report(selected_faculty)
 
     # ==================================================
     # OPTION 2 - ADD STUDENT
@@ -185,7 +174,7 @@ while True:
 
         # Display every available course
         for i, course in enumerate(courses):
-            print(f"{i + 1}. {course.name}")
+            print(f"{i + 1}. {course.course_name}")
 
         selection = int(input("Enter the course number: "))
 
@@ -225,14 +214,14 @@ while True:
         print("Select a student")
 
         # Display only students from the selected faculty
-        for i, student in enumerate(selected_faculty.students):
+        for i, student in enumerate(selected_faculty.faculty_students):
             print(f"{i + 1}. {student.name}")
 
         selection = int(input("Enter the student number: "))
 
         # Validate student selection
-        if 1 <= selection <= len(selected_faculty.students):
-            selected_student = selected_faculty.students[selection - 1]
+        if 1 <= selection <= len(selected_faculty.faculty_students):
+            selected_student = selected_faculty.faculty_students[selection - 1]
         else:
             print("Invalid number")
             continue
@@ -266,13 +255,13 @@ while True:
         print("Select a course")
 
         # Display every course
-        for i, course in enumerate(courses):
-            print(f"{i + 1}. {course.name}")
+        for i, course in enumerate(student.courses_taken):
+            print(f"{i + 1}. {course.course_name}")
 
         selection = int(input("Enter the course number: "))
 
         # Validate course selection
-        if 1 <= selection <= len(courses):
+        if 1 <= selection <= len(student.courses_taken):
             selected_course = courses[selection - 1]
         else:
             print("Invalid number")

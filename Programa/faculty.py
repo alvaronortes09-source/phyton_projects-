@@ -3,51 +3,29 @@ class Faculty:
     def __init__(self, faculty_name):
         # Initialize the faculty with a name and empty lists of students and courses
         self.faculty_name = faculty_name  # Name of the faculty (string)
-        self.students = []  # List of students in the faculty (list of Student objects)
-        self.courses = []  # List of courses in the faculty (list of Course objects)
+        self.faculty_students = []  # List of students in the faculty (list of Student objects)
 
     # Methods for managing students in the faculty
     def add_student(self, student: Student):
         # Add a new student to the list of students in the faculty
-        self.students.append(student)
+        self.faculty_students.append(student)
 
     def remove_student(self, student: Student):
         # Remove a student from the list of students in the faculty if it exists
-        if student in self.students:
+        if student in self.faculty_students:
             print(f"Student {student.name} has been removed")
-            self.students.remove(student)
+            self.faculty_students.remove(student)
         else:
             print("This student is not in the faculty")
 
     def get_students(self, students: list):
         # Return the list of students in the faculty
-        return self.students
-
-    def get_courses(self, courses: list):
-        # Return the list of courses in the faculty
-        return self.courses
-
-    # Methods for managing courses in the faculty
-    def add_course(self, course: Course):
-        # Add a new course to the list of courses in the faculty
-        self.courses.append(course)
-
-    def remove_course(self, course: Course):
-        # Remove a course from the list of courses in the faculty if it exists
-        if course in self.courses:
-            print(f"Course {course.name} has been removed")
-            self.courses.remove(course)
-        else:
-            print("This course is not in the faculty")
+        return self.faculty_students
 
     # Methods for getting the number of students and courses
     def get_number_of_students(self, students: Students):
         # Return the number of students in the faculty
-        return len(self.students)
-
-    def get_number_of_courses(self, courses: Course):
-        # Return the number of courses in the faculty
-        return len(self.courses)
+        return len(self.faculty_students)
 
     # Import the csv library for exporting information to a CSV file
     import csv
@@ -70,16 +48,16 @@ class Faculty:
                     row.append(course)
                     writer.writerow(row)
 
-def complete_report(self):
+def complete_report(self,):
     # Iterate over students in the faculty and print their information
-    for student in self.students:
+    for student in self.faculty_students:
         id_number = student.student_id  # ID number of the student (integer)
         name = student.name  # Name of the student (string)
         birth_date = student.birth_date  # Birth date of the student (string)
         print(f"ID Number = {id_number} | Name = {name} | Birth Date = {birth_date}")
-        for course in student.courses:
-            course_name = course.name  # Name of the course (string)
-            credits = course.credit  # Credits of the course (integer)
+        for course in student.courses_taken:
+            course_name = course.course_name  # Name of the course (string)
+            credits = course.credits  # Credits of the course (integer)
             grade = course.grade  # Grade of the course (float)
             print(f"Course = {course_name} | Credits = {credits} | Grade = {grade}")
 
