@@ -32,12 +32,13 @@ class Student:
             self.courses_taken.remove(course)
             
     # Define a method to update the grade of a specific course taken by the student
-    def update_grade(self, course_name: str, new_grade: float):
+    def update_grade(self, course_name: Course,):
         # Iterate over each course in the list of courses taken by the student
         for current_course in self.courses_taken:
             if current_course.course_name == course_name:  # Check if the course name matches
-                current_course.grade = new_grade  # Update the grade of the matching course
-                break  # Exit the loop since we've found and updated the course
+                new_grade = int(input("Enter the new grade: "))
+                current_course.grade = new_grade
+                print("New grade added succesfully")
 
         # If no matching course is found, print a message to indicate that
         else:

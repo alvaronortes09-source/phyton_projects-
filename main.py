@@ -9,35 +9,55 @@ SEPARATOR = "----------------------------------------------------------"
 from course import Course
 from student import Student
 from faculty import Faculty
-from faculty import complete_report
 
 # ======================================================
 # SAMPLE DATA
 # ======================================================
 
 # Create the initial list of students
-students = []
+students = [
+    Student(1, "Juan Pérez", "1990-01-01"),
+    Student(2, "María Gómez", "1992-06-15"),
+    Student(3, "Carlos Díaz", "1988-03-20"),
+    Student(4, "Sofía García", "1995-09-12"),
+    Student(5, "Daniel Rodríguez", "1990-11-25")
+]
 
 # Create the available courses
 courses = [
-    Course("Mathematics", 5, 0),
-    Course("Physics", 5, 0),
-    Course("Chemistry", 5, 0),
-    Course("Biology", 4, 0),
-    Course("History", 4, 0)
+    Course("Mathematics", 4, 8),
+    Course("Physics", 3, 7),
+    Course("Chemistry", 3, 6),
+    Course("Biology", 4, 9),
+    Course("History", 2, 5)
 ]
 
 # Assign every course to every sample student
-
+for student in students:
+    for course in courses:
+        student.add_course(course)
 
 # Create faculties
 faculties = [
     Faculty("Science Faculty"),
     Faculty("Humanities Faculty")
 ]
+
 # Populate each faculty with sample students
+for faculty in faculties:
 
+    for i in range(5):
 
+        new_student = Student(
+            i + 1,
+            f"Student {i + 1}",
+            "1990-01-01"
+        )
+
+        # Give every sample student one course
+        new_student.add_course(courses[0])
+
+        faculty.add_student(new_student)
 
 # ======================================================
 # MAIN MENU
@@ -54,8 +74,7 @@ def main_menu():
     print("3. Add course")
     print("4. Remove student")
     print("5. Remove course")
-    print("6. Statistics")
-    print("7. Exit")
+    print("6. Exit")
 
     print(SEPARATOR)
 
@@ -77,7 +96,7 @@ while True:
         continue
 
     # Validate menu option
-    if option not in (1, 2, 3, 4, 5, 6,7):
+    if option not in (1, 2, 3, 4, 5, 6):
         print("Invalid option.")
         continue
 
@@ -87,21 +106,8 @@ while True:
 
     if option == 1:
 
-        print("Select a faculty")
-
-        # Display every faculty
-        for i, faculty in enumerate(faculties):
-            print(f"{i + 1}. {faculty.faculty_name}")
-
-        selection = int(input("Enter the faculty number: "))
-
-        # Validate faculty selection
-        if 1 <= selection <= len(faculties):
-            selected_faculty = faculties[selection - 1]
-        else:
-            print("Invalid number")
-            continue
-        complete_report(selected_faculty)
+        for faculty in faculties:
+            print("")
 
     # ==================================================
     # OPTION 2 - ADD STUDENT
@@ -170,7 +176,7 @@ while True:
 
         # Display every available course
         for i, course in enumerate(courses):
-            print(f"{i + 1}. {course.course_name}")
+            print(f"{i + 1}. {course.name}")
 
         selection = int(input("Enter the course number: "))
 
@@ -180,9 +186,7 @@ while True:
         else:
             print("Invalid number")
             continue
-        #Using this function to stablish a grade to the course
-        selected_student.update_grade(selected_course.course_name)
-        
+
         # Add the selected course
         selected_student.add_course(selected_course)
 
@@ -212,14 +216,14 @@ while True:
         print("Select a student")
 
         # Display only students from the selected faculty
-        for i, student in enumerate(selected_faculty.faculty_students):
+        for i, student in enumerate(selected_faculty.students):
             print(f"{i + 1}. {student.name}")
 
         selection = int(input("Enter the student number: "))
 
         # Validate student selection
-        if 1 <= selection <= len(selected_faculty.faculty_students):
-            selected_student = selected_faculty.faculty_students[selection - 1]
+        if 1 <= selection <= len(selected_faculty.students):
+            selected_student = selected_faculty.students[selection - 1]
         else:
             print("Invalid number")
             continue
@@ -253,13 +257,13 @@ while True:
         print("Select a course")
 
         # Display every course
-        for i, course in enumerate(student.courses_taken):
-            print(f"{i + 1}. {course.course_name}")
+        for i, course in enumerate(courses):
+            print(f"{i + 1}. {course.name}")
 
         selection = int(input("Enter the course number: "))
 
         # Validate course selection
-        if 1 <= selection <= len(student.courses_taken):
+        if 1 <= selection <= len(courses):
             selected_course = courses[selection - 1]
         else:
             print("Invalid number")
@@ -271,15 +275,10 @@ while True:
         print("Course removed successfully.")
 
     # ==================================================
-    # OPTION 6 - Statistics
+    # OPTION 6 - EXIT
     # ==================================================
 
-        
-    # ==================================================
-    # OPTION 7 - EXIT
-    # ==================================================
-    elif option == 7:
-        print(SEPARATOR)
-        print("THANKS FOR USING THE STUDENT MANAGEMENT SYSTEM")
-        print(SEPARATOR)
+    elif option == 6:
+
+        print("Thank you for using the Student Management System.")
         break

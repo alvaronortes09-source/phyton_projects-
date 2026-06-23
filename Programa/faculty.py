@@ -92,4 +92,4 @@ def statistics(self):
     print(f"Total Number of Students: {total_students}")
     print(f"Number of Students Who Passed: {passed_students}")
     print(f"Number of Students Who Failed: {failed_students}")
-
+    print(f"The average grade is {average_grade}")
