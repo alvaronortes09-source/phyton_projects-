@@ -1,3 +1,7 @@
+# Visual separator used to improve console readability
+SPACE = "                                                            "
+SEPARATOR = "----------------------------------------------------------"
+
 # Define a class called Faculty
 class Faculty:
     def __init__(self, faculty_name):
@@ -47,6 +51,46 @@ class Faculty:
                 for course in student.courses:
                     row.append(course)
                     writer.writerow(row)
+    
+    def statistics(self):
+
+        # Total number of students
+        total_students = len(self.faculty_students)
+
+        # Store every grade
+        grades = []
+
+        for student in self.faculty_students:
+            for course in student.courses_taken:
+                grades.append(course.grade)
+
+        # Calculate the average grade
+        if len(grades) > 0:
+            average_grade = sum(grades) / len(grades)
+        else:
+            average_grade = 0
+
+        # Count passed and failed courses
+        passed_courses = 0
+        failed_courses = 0
+
+        for student in self.faculty_students:
+            for course in student.courses_taken:
+
+                if course.grade >= 5:
+                    passed_courses += 1
+                else:
+                    failed_courses += 1
+
+        print(SPACE)
+        print(SEPARATOR)
+        print(f"Total students: {total_students}")
+        print(f"Passed courses: {passed_courses}")
+        print(f"Failed courses: {failed_courses}")
+        print(f"Average grade: {average_grade:.2f}")
+        print(SEPARATOR)
+        print(SPACE)
+        
 
 def complete_report(self,):
     # Iterate over students in the faculty and print their information
@@ -60,36 +104,3 @@ def complete_report(self,):
             credits = course.credits  # Credits of the course (integer)
             grade = course.grade  # Grade of the course (float)
             print(f"Course = {course_name} | Credits = {credits} | Grade = {grade}")
-
-def statistics(self):
-    # Get the total number of students
-    total_students = len(self.students)
-
-    # Get a list of grades from all students
-    grades = []
-    for student in self.students:
-        for course in student.courses:
-            grade = course.grade  # Grade of the course (float)
-            grades.append(grade)
-
-    # Calculate the average grade
-    average_grade = sum(grades) / total_students
-
-    # Initialize counters for students who passed and failed
-    passed_students = 0
-    failed_students = 0
-
-    # Iterate over students in the faculty and check if they passed or failed
-    for student in self.students:
-        for course in student.courses:
-            grade = course.grade  # Grade of the course (float)
-            if grade >= 5:  # Check if the student passed (grade >= 5)
-                passed_students += 1
-            else:
-                failed_students += 1
-
-    # Print statistics
-    print(f"Total Number of Students: {total_students}")
-    print(f"Number of Students Who Passed: {passed_students}")
-    print(f"Number of Students Who Failed: {failed_students}")
-    print(f"The average grade is {average_grade}")

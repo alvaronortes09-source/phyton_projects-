@@ -3,6 +3,7 @@
 # ======================================================
 
 # Visual separator used to improve console readability
+SPACE = "                                                            "
 SEPARATOR = "----------------------------------------------------------"
 
 # Import project classes
@@ -24,8 +25,13 @@ courses = [
     Course("Physics", 5, 0),
     Course("Chemistry", 5, 0),
     Course("Biology", 4, 0),
-    Course("History", 4, 0)
+    Course("History", 4, 0),
+    Course("Geography", 4, 0),
+    Course("Philosophy", 3, 0),
+    Course("Psychology", 3, 0),
+    Course("Sociology", 3, 0)
 ]
+
 
 # Assign every course to every sample student
 
@@ -33,7 +39,10 @@ courses = [
 # Create faculties
 faculties = [
     Faculty("Science Faculty"),
-    Faculty("Humanities Faculty")
+    Faculty("Humanities Faculty"),
+    Faculty("Engineering Faculty"),
+    Faculty("Arts Faculty"),
+    Faculty("Business Faculty")
 ]
 # Populate each faculty with sample students
 
@@ -180,13 +189,19 @@ while True:
         else:
             print("Invalid number")
             continue
-        #Using this function to stablish a grade to the course
-        selected_student.update_grade(selected_course.course_name)
-        
-        # Add the selected course
-        selected_student.add_course(selected_course)
 
-        print("Course assigned successfully.")
+        # Create a NEW course object for this student
+        new_course = Course(
+            selected_course.course_name,
+            selected_course.credits,
+            0
+)
+
+        # Add the new course to the student
+        selected_student.add_course(new_course)
+
+        # Ask for the student's grade
+        selected_student.update_grade(new_course.course_name)
 
     # ==================================================
     # OPTION 4 - REMOVE STUDENT
@@ -273,7 +288,23 @@ while True:
     # ==================================================
     # OPTION 6 - Statistics
     # ==================================================
+    elif option == 6:
+        
+        print("Select a faculty")
 
+        # Display every faculty
+        for i, faculty in enumerate(faculties):
+            print(f"{i + 1}. {faculty.faculty_name}")
+
+        selection = int(input("Enter the faculty number: "))
+
+        # Validate faculty selection
+        if 1 <= selection <= len(faculties):
+            selected_faculty = faculties[selection - 1]
+        else:
+            print("Invalid number")
+            continue
+        Faculty.statistics(selected_faculty)
         
     # ==================================================
     # OPTION 7 - EXIT
