@@ -24,12 +24,16 @@ class Student:
             print("That course is currently added")
 
     # Define a method to add a course taken by the student
-    def remove_course(self, course: Course):
-        # Add the provided course to the list of courses taken by the student
-        if course not in self.courses_taken:
-            print("The student is not enrolled in this course.")
-        else:
-            self.courses_taken.remove(course)
+    def add_course(self, course: Course):
+
+        for current_course in self.courses_taken:
+
+            if current_course.course_name == course.course_name:
+                print("That course is already assigned.")
+                return False
+
+        self.courses_taken.append(course)
+        return True
             
     def update_grade(self, course_name):
 

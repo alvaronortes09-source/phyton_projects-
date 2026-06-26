@@ -136,6 +136,12 @@ while True:
         # Ask for the student's name
         new_student_name = input("Student name: ")
 
+        #Ask for the student's birthday
+        new_year = input("The year the student was born: ")
+        new_month = input("The month that was born: ")
+        new_day = input("The day he was born: ")
+        
+        new_birth_date = f"{new_year}-{new_month}-{new_day}"
         # Generate a new ID
         new_student_id = len(students) + 1
 
@@ -143,7 +149,7 @@ while True:
         new_student = Student(
             new_student_id,
             new_student_name,
-            "1990-01-01"
+            new_birth_date
         )
 
         # Store the student globally
@@ -190,18 +196,21 @@ while True:
             print("Invalid number")
             continue
 
+
         # Create a NEW course object for this student
+        
         new_course = Course(
             selected_course.course_name,
             selected_course.credits,
-            0
-)
+            0)
 
         # Add the new course to the student
-        selected_student.add_course(new_course)
+        
+        if selected_student.add_course(new_course):
 
         # Ask for the student's grade
-        selected_student.update_grade(new_course.course_name)
+        
+            selected_student.update_grade(new_course.course_name)
 
     # ==================================================
     # OPTION 4 - REMOVE STUDENT
