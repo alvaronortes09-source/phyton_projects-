@@ -86,7 +86,7 @@ while True:
         continue
 
     # Validate menu option
-    if option not in (1, 2, 3, 4, 5, 6,7):
+    if option not in (1, 2, 3, 4, 5, 6, 7):
         print("Invalid option.")
         continue
 
@@ -100,10 +100,16 @@ while True:
 
         # Display every faculty
         for i, faculty in enumerate(faculties):
-            print(f"{i + 1}. {faculty.faculty_name}")
+            print(f"{i+1}. {faculty.faculty_name}")
 
-        selection = int(input("Enter the faculty number: "))
-
+        while True:
+            try:
+                selection = int(input("Enter the faculty number: "))
+                break
+            except ValueError:
+                print("Invalid input.")
+                continue
+        
         # Validate faculty selection
         if 1 <= selection <= len(faculties):
             selected_faculty = faculties[selection - 1]
@@ -122,10 +128,16 @@ while True:
 
         # Display every faculty
         for i, faculty in enumerate(faculties):
-            print(f"{i + 1}. {faculty.faculty_name}")
+            print(f"{i+1}. {faculty.faculty_name}")
 
-        selection = int(input("Enter the faculty number: "))
-
+        while True:
+            try:
+                selection = int(input("Enter the faculty number: "))
+                break
+            except ValueError:
+                print("Invalid input.")
+                continue
+        
         # Validate faculty selection
         if 1 <= selection <= len(faculties):
             selected_faculty = faculties[selection - 1]
@@ -134,12 +146,48 @@ while True:
             continue
 
         # Ask for the student's name
-        new_student_name = input("Student name: ")
+        while True:
+            new_student_name = input("Student name: ").strip()
 
+            if new_student_name:
+                break
+
+            print("Please enter a valid name.")
+        
         #Ask for the student's birthday
-        new_year = input("The year the student was born: ")
-        new_month = input("The month that was born: ")
-        new_day = input("The day he was born: ")
+        try:
+            new_year = int(input("The year the student was born: "))
+        except ValueError:
+            print("Please enter a valid number.")
+            continue
+        
+        while True:
+
+            try:
+                new_month = int(input("Birth month: "))
+
+                if 1 <= new_month <= 12:
+                    break
+
+                print("Month must be between 1 and 12.")
+
+            except ValueError:
+                print("Please enter a number.")
+        
+        while True:
+
+            try:
+                new_day = int(input("The day he was born: "))
+
+                if 1 <= new_day <= 31:
+                    break
+
+                print("Day must be between 1 and 31.")
+
+            except ValueError:
+                print("Please enter a number.")
+        
+        
         
         new_birth_date = f"{new_year}-{new_month}-{new_day}"
         # Generate a new ID
@@ -170,10 +218,16 @@ while True:
 
         # Display every student
         for i, student in enumerate(students):
-            print(f"{i + 1}. {student.name}")
+            print(f"{i+1}. {student.name}")
 
-        selection = int(input("Enter the student number: "))
-
+        while True:
+            try:
+                selection = int(input("Enter the student number: "))
+                break
+            except ValueError:
+                print("Invalid input.")
+                continue
+            
         # Validate student selection
         if 1 <= selection <= len(students):
             selected_student = students[selection - 1]
@@ -187,7 +241,14 @@ while True:
         for i, course in enumerate(courses):
             print(f"{i + 1}. {course.course_name}")
 
-        selection = int(input("Enter the course number: "))
+            # Keep asking until the user enters a valid number
+        while True:
+            try:
+                selection = int(input("Enter the course number: "))
+                break
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+                continue
 
         # Validate course selection
         if 1 <= selection <= len(courses):
@@ -224,8 +285,15 @@ while True:
         for i, faculty in enumerate(faculties):
             print(f"{i + 1}. {faculty.faculty_name}")
 
-        selection = int(input("Enter the faculty number: "))
+        while True:
+            try:
+                selection = int(input("Enter the faculty number: "))
+                break
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+            continue
 
+        
         # Validate faculty selection
         if 1 <= selection <= len(faculties):
             selected_faculty = faculties[selection - 1]
@@ -237,9 +305,15 @@ while True:
 
         # Display only students from the selected faculty
         for i, student in enumerate(selected_faculty.faculty_students):
-            print(f"{i + 1}. {student.name}")
+            print(f"{i+1}. {student.name}")
 
-        selection = int(input("Enter the student number: "))
+        while True:
+            try:
+                selection = int(input("Enter the student number: "))
+                break
+            except ValueError:
+                print("Invalid input.")
+                continue
 
         # Validate student selection
         if 1 <= selection <= len(selected_faculty.faculty_students):
@@ -263,9 +337,15 @@ while True:
 
         # Display every student
         for i, student in enumerate(students):
-            print(f"{i + 1}. {student.name}")
+            print(f"{i+1}. {student.name}")
 
-        selection = int(input("Enter the student number: "))
+        while True:
+            try:
+                selection = int(input("Enter the student number: "))
+                break
+            except ValueError:
+                print("Invalid input.")
+                continue
 
         # Validate student selection
         if 1 <= selection <= len(students):
@@ -276,15 +356,22 @@ while True:
 
         print("Select a course")
 
-        # Display every course
-        for i, course in enumerate(student.courses_taken):
+        # Display every available course
+        for i, course in enumerate(selected_student.courses_taken):
             print(f"{i + 1}. {course.course_name}")
 
-        selection = int(input("Enter the course number: "))
-
+        # Keep asking until the user enters a valid number
+        while True:
+            try:
+                selection = int(input("Enter the course number: "))
+                break
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+                continue
+    
         # Validate course selection
-        if 1 <= selection <= len(student.courses_taken):
-            selected_course = courses[selection - 1]
+        if 1 <= selection <= len(selected_student.courses_taken):
+            selected_course = selected_student.courses_taken[selection - 1]
         else:
             print("Invalid number")
             continue
@@ -303,10 +390,16 @@ while True:
 
         # Display every faculty
         for i, faculty in enumerate(faculties):
-            print(f"{i + 1}. {faculty.faculty_name}")
+            print(f"{i+1}. {faculty.faculty_name}")
 
-        selection = int(input("Enter the faculty number: "))
-
+        while True:
+            try:
+                selection = int(input("Enter the faculty number: "))
+                break
+            except ValueError:
+                print("Invalid input.")
+                continue
+    
         # Validate faculty selection
         if 1 <= selection <= len(faculties):
             selected_faculty = faculties[selection - 1]

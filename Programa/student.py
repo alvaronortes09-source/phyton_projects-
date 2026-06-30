@@ -23,6 +23,24 @@ class Student:
         else:
             print("That course is currently added")
 
+    def remove_course(self, course: Course):
+
+        # Check if the student is enrolled in the selected course
+        for current_course in self.courses_taken:
+
+            if current_course.course_name == course.course_name:
+
+                self.courses_taken.remove(current_course)
+
+                print("Course removed successfully.")
+
+                return True
+
+        print("The student is not enrolled in this course.")
+
+        return False
+    
+    
     # Define a method to add a course taken by the student
     def add_course(self, course: Course):
 
@@ -40,13 +58,22 @@ class Student:
         for course in self.courses_taken:
 
             if course.course_name == course_name:
-                
-                new_grade = int(input("Enter the new grade: "))
-                course.grade = new_grade
 
-                print("New grade added successfully")
-                return
+                while True:
+
+                    try:
+                        new_grade = float(input("Enter the new grade (0-10): "))
+
+                        # Validate the grade range
+                        if 0 <= new_grade <= 10:
+                            course.grade = new_grade
+                            print("New grade added successfully")
+                            return
+                        else:
+                            print("The grade must be between 0 and 10.")
+
+                    except ValueError:
+                        print("Please enter a valid number.")
 
         print("Course not found.")
-
 

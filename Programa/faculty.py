@@ -21,36 +21,6 @@ class Faculty:
             self.faculty_students.remove(student)
         else:
             print("This student is not in the faculty")
-
-    def get_students(self, students: list):
-        # Return the list of students in the faculty
-        return self.faculty_students
-
-    # Methods for getting the number of students and courses
-    def get_number_of_students(self, students: Students):
-        # Return the number of students in the faculty
-        return len(self.faculty_students)
-
-    # Import the csv library for exporting information to a CSV file
-    import csv
-
-    # Method for exporting student and course information to a CSV file
-    def export_to_csv(self, filename='exported.csv'):
-        # Open the file in write mode with the 'w' option (write)
-        with open(filename, 'w', newline='') as csvfile:
-            # Create a writer object to write to the CSV file
-            writer = csv.writer(csvfile)
-
-            # Write the header of the CSV file
-            header = ['ID', 'Name', 'Course']
-            writer.writerow(header)
-
-            # Iterate over students and courses in the faculty and write to the CSV file
-            for student in self.students:
-                row = [student.id, student.name]
-                for course in student.courses:
-                    row.append(course)
-                    writer.writerow(row)
     
     def statistics(self):
 
